@@ -1,5 +1,5 @@
-1
-composer create-project --prefer-dist yiisoft/yii2-app-basic xxxx
+1 
+    composer create-project --prefer-dist yiisoft/yii2-app-basic xxxx
 
 2 Nginx.conf
 server {
