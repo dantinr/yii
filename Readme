@@ -1,0 +1,47 @@
+1
+composer create-project --prefer-dist yiisoft/yii2-app-basic xxxx
+
+2 Nginx.conf
+server {
+    listen      80;
+    server_name yii.com;
+    root        E:\\wwwroot\\yii\\web;
+    index       index.php;
+    charset     utf-8;
+
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+	location ~ \.php {
+		fastcgi_pass  127.0.0.1:9000;
+		fastcgi_index index.php;
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		fastcgi_param PATH_INFO $fastcgi_script_name;
+		access_log off;
+	}
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
+
+3. config/web.php	开启 urlManager
+'components' => [
+   'urlManager' => [
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+            ],
+        ],
+]
+
+4 Controllers/SiteController.php
+    public function actionDbtest()
+    {
+        $list = Yii::$app->db->createCommand("select * from city limit 10")->queryAll();
+        echo '<pre>';print_r($list);echo '</pre>';
+    }
+
+5 访问 yii.com/site/dbtest	[pathinfo]

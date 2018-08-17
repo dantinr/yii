@@ -125,4 +125,10 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+    public function actionDbtest()
+    {
+        $list = Yii::$app->db->createCommand("select * from city limit 10")->queryAll();
+        echo '<pre>';print_r($list);echo '</pre>';
+    }
 }
